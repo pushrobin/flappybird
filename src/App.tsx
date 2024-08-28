@@ -65,8 +65,8 @@ class FlappyBirdScene extends Phaser.Scene {
 
     // Move pipes
     for (let i = 0; i < this.pipes.length; i += 2) {
-      if (!this.pipes[i] || !this.pipes[i + 1]) {
-        console.warn(`Pipe at index ${i} or ${i + 1} is null`);
+      if (!this.pipes[i] || !this.pipes[i + 1] || !this.pipes[i].scene || !this.pipes[i + 1].scene) {
+        console.warn(`Pipe at index ${i} or ${i + 1} is null or destroyed`);
         continue;
       }
       this.pipes[i].x -= this.gameSpeed;
@@ -95,11 +95,22 @@ class FlappyBirdScene extends Phaser.Scene {
   private startGame() {
     this.isGameRunning = true;
     this.startButton.setVisible(false);
+    this.destroyPipes();
     this.createPipes();
+    this.score = 0;
+    this.scoreText.setText('Score: 0');
+    this.gameSpeed = 2;
+    this.bird.setPosition(GAME_WIDTH / 4, GAME_HEIGHT / 2);
   }
 
   private retryGame() {
+    this.destroyPipes();
     this.scene.restart();
+  }
+
+  private destroyPipes() {
+    this.pipes.forEach(pipe => pipe.destroy());
+    this.pipes = [];
   }
 
   private flapBird() {
@@ -119,7 +130,7 @@ class FlappyBirdScene extends Phaser.Scene {
   }
 
   private repositionPipe(bottomPipe: Phaser.GameObjects.Rectangle, topPipe: Phaser.GameObjects.Rectangle) {
-    if (!bottomPipe || !topPipe) {
+    if (!bottomPipe || !topPipe || !bottomPipe.scene || !topPipe.scene) {
       console.warn('Attempted to reposition destroyed pipes');
       return;
     }
