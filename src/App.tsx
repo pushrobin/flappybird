@@ -122,7 +122,8 @@ class FlappyBirdScene extends Phaser.Scene {
   }
 
   private checkCollision(bird: Phaser.GameObjects.Arc, pipe: Phaser.GameObjects.Rectangle): boolean {
-    return Phaser.Geom.Intersects.CircleToRectangle(bird, pipe.getBounds());
+    const birdCircle = new Phaser.Geom.Circle(bird.x, bird.y, bird.radius);
+    return Phaser.Geom.Intersects.CircleToRectangle(birdCircle, pipe.getBounds());
   }
 
   private endGame() {
