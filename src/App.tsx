@@ -65,6 +65,10 @@ class FlappyBirdScene extends Phaser.Scene {
 
     // Move pipes
     for (let i = 0; i < this.pipes.length; i += 2) {
+      if (!this.pipes[i] || !this.pipes[i + 1]) {
+        console.warn(`Pipe at index ${i} or ${i + 1} is null`);
+        continue;
+      }
       this.pipes[i].x -= this.gameSpeed;
       this.pipes[i + 1].x -= this.gameSpeed;
 
@@ -115,10 +119,16 @@ class FlappyBirdScene extends Phaser.Scene {
   }
 
   private repositionPipe(bottomPipe: Phaser.GameObjects.Rectangle, topPipe: Phaser.GameObjects.Rectangle) {
+    if (!bottomPipe || !topPipe) {
+      console.warn('Attempted to reposition destroyed pipes');
+      return;
+    }
     const x = GAME_WIDTH;
     const bottomPipeHeight = Phaser.Math.Between(100, GAME_HEIGHT - FLOOR_HEIGHT - PIPE_GAP - 100);
-    bottomPipe.setPosition(x, GAME_HEIGHT - FLOOR_HEIGHT).setSize(PIPE_WIDTH, bottomPipeHeight);
-    topPipe.setPosition(x, 0).setSize(PIPE_WIDTH, GAME_HEIGHT - FLOOR_HEIGHT - bottomPipeHeight - PIPE_GAP);
+    bottomPipe.setPosition(x, GAME_HEIGHT - FLOOR_HEIGHT);
+    bottomPipe.setSize(PIPE_WIDTH, bottomPipeHeight);
+    topPipe.setPosition(x, 0);
+    topPipe.setSize(PIPE_WIDTH, GAME_HEIGHT - FLOOR_HEIGHT - bottomPipeHeight - PIPE_GAP);
   }
 
   private checkCollision(bird: Phaser.GameObjects.Arc, pipe: Phaser.GameObjects.Rectangle): boolean {
