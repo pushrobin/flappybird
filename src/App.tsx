@@ -54,7 +54,7 @@ class FlappyBirdScene extends Phaser.Scene {
       .setVisible(false);
 
     // Set up keyboard input
-    this.input.keyboard.on('keydown-Z', this.flapBird, this);
+    this.input.keyboard?.on('keydown-Z', this.flapBird, this);
   }
 
   update() {
@@ -122,7 +122,7 @@ class FlappyBirdScene extends Phaser.Scene {
   }
 
   private checkCollision(bird: Phaser.GameObjects.Arc, pipe: Phaser.GameObjects.Rectangle): boolean {
-    return Phaser.Geom.Intersects.RectangleToCircle(pipe.getBounds(), bird);
+    return Phaser.Geom.Intersects.CircleToRectangle(bird, pipe.getBounds());
   }
 
   private endGame() {
@@ -141,7 +141,7 @@ const App: React.FC = () => {
       physics: {
         default: 'arcade',
         arcade: {
-          gravity: { y: 0 },
+          gravity: { y: 0, x: 0 },
         },
       },
     };

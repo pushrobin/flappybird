@@ -1,0 +1,24 @@
+name: PR Check
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+
+      - name: Install and Build 🔧
+        run: |
+          npm install
+          npm run build
+
+      - name: Check for build errors
+        run: |
+          if [ $? -ne 0 ]; then
+            echo "Build failed. Please fix the errors before merging."
+            exit 1
+          fi
