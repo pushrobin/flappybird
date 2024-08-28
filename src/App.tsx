@@ -95,17 +95,19 @@ class FlappyBirdScene extends Phaser.Scene {
   private startGame() {
     this.isGameRunning = true;
     this.startButton.setVisible(false);
+    this.retryButton.setVisible(false);
     this.destroyPipes();
     this.createPipes();
     this.score = 0;
     this.scoreText.setText('Score: 0');
     this.gameSpeed = 2;
     this.bird.setPosition(GAME_WIDTH / 4, GAME_HEIGHT / 2);
+    this.bird.y = GAME_HEIGHT / 2; // Ensure bird's y position is reset
   }
 
   private retryGame() {
     this.destroyPipes();
-    this.scene.restart();
+    this.startGame();
   }
 
   private destroyPipes() {
