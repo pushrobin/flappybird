@@ -34,6 +34,9 @@ class FlappyBirdScene extends Phaser.Scene {
     // Create bird
     this.bird = this.add.circle(GAME_WIDTH / 4, GAME_HEIGHT / 2, BIRD_RADIUS, 0xFF0000);
 
+    // Enable input events on the game canvas
+    this.input.on('pointerdown', this.handleInput, this);
+
     // Create floor
     this.floor = this.add.rectangle(0, GAME_HEIGHT - FLOOR_HEIGHT, GAME_WIDTH, FLOOR_HEIGHT, 0x8B4513).setOrigin(0, 0);
 
@@ -54,7 +57,7 @@ class FlappyBirdScene extends Phaser.Scene {
       .setVisible(false);
 
     // Set up keyboard input
-    this.input.keyboard?.on('keydown-Z', this.flapBird, this);
+    this.input.keyboard?.on('keydown-Z', this.handleInput, this);
   }
 
   update() {
@@ -115,10 +118,16 @@ class FlappyBirdScene extends Phaser.Scene {
     this.pipes = [];
   }
 
-  private flapBird() {
+  private handleInput() {
     if (this.isGameRunning) {
-      this.bird.y -= 50;
+      this.flapBird();
+    } else {
+      this.startGame();
     }
+  }
+
+  private flapBird() {
+    this.bird.y -= 50;
   }
 
   private createPipes() {
@@ -182,10 +191,25 @@ const App: React.FC = () => {
           GitHub Repo
         </a>
       </header>
-      <p>Press Z to flap</p>
+      <p>Click/Tap or press Z to flap. Press Z to start/restart.</p>
       <div id="phaser-game" />
     </div>
   );
 };
 
 export default App;
+
+// Add touch event listeners for mobile devices
+document.addEventListener('DOMContentLoaded', () => {
+  document.body.addEventListener('touchstart', function(e) {
+    if (e.target instanceof HTMLCanvasElement) {
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  document.body.addEventListener('touchend', function(e) {
+    if (e.target instanceof HTMLCanvasElement) {
+      e.preventDefault();
+    }
+  }, { passive: false });
+});
