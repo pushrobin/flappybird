@@ -168,19 +168,21 @@ const App: React.FC = () => {
           gravity: { y: 0, x: 0 },
         },
       },
+      parent: 'phaser-game',
     };
 
     new Phaser.Game(config);
   }, []);
 
   return (
-    <div>
-      <header>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '2rem' }}>
+      <header style={{ textAlign: 'center', marginBottom: '1rem' }}>
         <h1>Flappy Bird Clone</h1>
         <a href="https://github.com/pushrobin/flappybird" target="_blank" rel="noopener noreferrer">
           GitHub Repo
         </a>
       </header>
+      <p>Press Z to flap</p>
       <div id="phaser-game" />
     </div>
   );
