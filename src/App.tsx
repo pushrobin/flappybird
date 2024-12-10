@@ -16,10 +16,10 @@ class FlappyBirdScene extends Phaser.Scene {
   private startButton!: Phaser.GameObjects.Text;
   private retryButton!: Phaser.GameObjects.Text;
   private score: number = 0;
-  private gameSpeed: number = 40;
+  private gameSpeed: number = 80;
   private isGameRunning: boolean = false;
   private birdVelocity: number = 0;
-  private gravity: number = 200;
+  private gravity: number = 400;
 
   constructor() {
     super('FlappyBirdScene');
@@ -85,7 +85,7 @@ class FlappyBirdScene extends Phaser.Scene {
         this.repositionPipe(this.pipes[i], this.pipes[i + 1]);
         this.score++;
         this.scoreText.setText(`Score: ${this.score}`);
-        this.gameSpeed = Math.min(100, 40 + this.score * 2); // Increase speed up to a maximum
+        this.gameSpeed = Math.min(200, 80 + this.score * 4); // Increase speed up to a maximum
       }
 
       // Check for collision with pipes
@@ -108,7 +108,7 @@ class FlappyBirdScene extends Phaser.Scene {
     this.createPipes();
     this.score = 0;
     this.scoreText.setText('Score: 0');
-    this.gameSpeed = 40;
+    this.gameSpeed = 80;
     this.bird.setPosition(GAME_WIDTH / 4, GAME_HEIGHT / 2);
     this.bird.y = GAME_HEIGHT / 2; // Ensure bird's y position is reset
     this.birdVelocity = 0;
@@ -133,7 +133,7 @@ class FlappyBirdScene extends Phaser.Scene {
   }
 
   private flapBird() {
-    this.birdVelocity = -100;
+    this.birdVelocity = -200;
   }
 
   private createPipes() {
