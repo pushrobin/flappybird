@@ -140,8 +140,8 @@ class FlappyBirdScene extends Phaser.Scene {
     for (let i = 0; i < 3; i++) {
       const x = GAME_WIDTH + i * 300;
       const bottomPipeHeight = Phaser.Math.Between(100, GAME_HEIGHT - FLOOR_HEIGHT - PIPE_GAP - 100);
-const bottomPipe = this.add.rectangle(x, GAME_HEIGHT - FLOOR_HEIGHT, PIPE_WIDTH, bottomPipeHeight, 0x800080).setOrigin(0, 1);
-const topPipe = this.add.rectangle(x, 0, PIPE_WIDTH, GAME_HEIGHT - FLOOR_HEIGHT - bottomPipeHeight - PIPE_GAP, 0x800080).setOrigin(0, 0);
+const bottomPipe = this.add.rectangle(x, GAME_HEIGHT - FLOOR_HEIGHT, PIPE_WIDTH, bottomPipeHeight, 0x00FF00).setOrigin(0, 1);
+const topPipe = this.add.rectangle(x, 0, PIPE_WIDTH, GAME_HEIGHT - FLOOR_HEIGHT - bottomPipeHeight - PIPE_GAP, 0x00FF00).setOrigin(0, 0);
       this.pipes.push(bottomPipe, topPipe);
     }
   }
